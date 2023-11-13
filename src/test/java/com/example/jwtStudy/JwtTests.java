@@ -1,8 +1,10 @@
 package com.example.jwtStudy;
 
+import com.example.jwtStudy.jwt.JwtProvider;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.*;
@@ -15,6 +17,8 @@ import java.util.Base64;
 class JwtTests {
 	@Value("${custom.jwt.secretKey}")
 	private String secretKeyPlain;
+	@Autowired
+	JwtProvider jwtProvider;
 
 	@Test
 	@DisplayName("secretKey 존재 여부")
@@ -29,6 +33,15 @@ class JwtTests {
 		SecretKey secretKey = Keys.hmacShaKeyFor(keyBase64Encoded.getBytes());
 
 		assertThat(secretKey).isNotNull();
+	}
+
+	@Test
+	@DisplayName("SecretKey 객체가 단 한번만 생성되는지 테스트")
+	void createSecertKeyOnlyOnce() {
+		SecretKey secretKey1 = jwtProvider.getSecretKey();
+		SecretKey secretKey2 = jwtProvider.getSecretKey();
+
+		assertThat(secretKey1 == secretKey2).isTrue();
 	}
 
 }
