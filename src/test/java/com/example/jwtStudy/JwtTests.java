@@ -12,6 +12,9 @@ import static org.assertj.core.api.Assertions.*;
 import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @SpringBootTest
 class JwtTests {
@@ -42,6 +45,19 @@ class JwtTests {
 		SecretKey secretKey2 = jwtProvider.getSecretKey();
 
 		assertThat(secretKey1 == secretKey2).isTrue();
+	}
+
+	@Test
+	@DisplayName("JWT 생성")
+	void createJWT() {
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("id", 1L);
+		claims.put("username", "admin");
+
+		String accessToken = jwtProvider.genToken(claims, 60 * 60 * 5);
+
+		System.out.println("accessToken : " + accessToken);
+		assertThat(accessToken).isNotNull();
 	}
 
 }
