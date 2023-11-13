@@ -10,11 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.*;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @SpringBootTest
 class JwtTests {
@@ -60,4 +58,17 @@ class JwtTests {
 		assertThat(accessToken).isNotNull();
 	}
 
+	@Test
+	@DisplayName("만료된 토큰 검사.")
+	void checkToken() {
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("id", 1L);
+		claims.put("username", "admin");
+
+		String accessToken = jwtProvider.genToken(claims, -1);
+
+		System.out.println("accessToken : " + accessToken);
+
+		assertThat(jwtProvider.verify(accessToken)).isFalse();
+	}
 }
