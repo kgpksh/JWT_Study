@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
     @GetMapping("/join")
     public String join() {
-        return "join.html";
+        return "member/join.html";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login.html";
+        return "member/login.html";
     }
 }
