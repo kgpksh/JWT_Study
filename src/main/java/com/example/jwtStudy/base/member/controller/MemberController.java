@@ -1,4 +1,4 @@
-package com.example.jwtStudy.base.member;
+package com.example.jwtStudy.base.member.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
