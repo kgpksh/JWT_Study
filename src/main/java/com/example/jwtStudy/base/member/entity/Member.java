@@ -2,6 +2,7 @@ package com.example.jwtStudy.base.member.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Setter
+@Getter
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
