@@ -17,8 +17,8 @@ public class MemberTests {
     @Test
     @DisplayName("회원 가입 테스트")
     void joinTest() {
-        memberService.join("관리자", "1234");
         try {
+            memberService.join("관리자", "1234");
             Member member = memberService.checkMember("관리자", "1234");
             assertThat(member.getUsername()).isEqualTo("관리자");
         } catch (Exception e) {

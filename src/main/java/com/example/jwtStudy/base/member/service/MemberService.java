@@ -18,7 +18,11 @@ public class MemberService {
     private final  PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Member join(String username, String password) {
+    public Member join(String username, String password) throws IllegalAccessException {
+        Optional<Member> checkMember = memberRepository.findMemberByUsername(username);
+        if (checkMember.isPresent()) {
+            throw new IllegalAccessException("이미 존재 하는 아이디입니다.");
+        }
         Member member = new Member();
         member.setUsername(username);
         member.setPassword(passwordEncoder.encode(password));
