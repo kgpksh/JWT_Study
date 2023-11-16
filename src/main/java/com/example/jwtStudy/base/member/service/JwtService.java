@@ -14,7 +14,7 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 public class JwtService {
-    private static final long tokenDuration = 60L * 60 * 1;
+    private static final long tokenDuration = 60L * 60 * 1000;
     private final MemberService memberService;
     @Value("${custom.jwt.secretKey}")
     private String secretKey;
@@ -30,5 +30,15 @@ public class JwtService {
             throw new IllegalAccessException("잘못된 아이디 혹은 비밀번호 입니다.");
         }
 
+    }
+
+    public boolean isExpired(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration()
+                .before(new Date());
     }
 }

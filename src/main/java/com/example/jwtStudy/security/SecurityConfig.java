@@ -1,5 +1,7 @@
 package com.example.jwtStudy.security;
 
+import com.example.jwtStudy.base.member.service.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +21,7 @@ public class SecurityConfig {
         return httpSecurity
                 .httpBasic(httpBasicConfigurer -> httpBasicConfigurer.disable())
                 .csrf(csrfConfigurer -> csrfConfigurer.disable())
+                .cors(corsConfigurer -> corsConfigurer.disable())
                 .authorizeHttpRequests(requests -> {
                     requests.requestMatchers(
                             new AntPathRequestMatcher("/member/**"),

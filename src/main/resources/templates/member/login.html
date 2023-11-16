@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout/layout.html}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
-<main layout:fragment="main">
-    <form action="/member/login" method="post">
-        <div>
-            <div>아이디</div>
-            <input type="text" name="username">
-        </div>
+<form action="/member/login" method="post">
+    <div>
+        <div>아이디</div>
+        <input type="text" name="username">
+    </div>
 
-        <div>
-            <div>비밀번호</div>
-            <input type="text" name="password">
-        </div>
+    <div>
+        <div>비밀번호</div>
+        <input type="text" name="password">
+    </div>
 
-        <button type="submit">로그인</button>
-    </form>
-</main>
-
+    <button type="submit">로그인</button>
+</form>
 </body>
 </html>
