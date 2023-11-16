@@ -1,8 +1,10 @@
 package com.example.jwtStudy.base.member.service;
 
+import com.example.jwtStudy.base.member.dto.LoginForm;
 import com.example.jwtStudy.base.member.entity.Member;
 import com.example.jwtStudy.base.member.reposeitory.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,10 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final  PasswordEncoder passwordEncoder;
+
+    @Value("${custom.jwt.secretKey}")
+    private String secretKey;
+
 
     @Transactional
     public Member join(String username, String password) throws IllegalAccessException {
@@ -44,5 +50,16 @@ public class MemberService {
         }
 
         return member;
+    }
+
+    public String login(LoginForm loginForm) {
+        String username = loginForm.getUsername();
+        String password = loginForm.getPassword();
+        try {
+            checkMember(username, password);
+            return JwtService.createJwt(username, secretKey);
+        } catch (Exception e) {
+            return "잘못된 아이디 혹은 비밀번호 입니다.";
+        }
     }
 }

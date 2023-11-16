@@ -2,6 +2,7 @@ package com.example.jwtStudy.security;
 
 import com.example.jwtStudy.base.member.service.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +17,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Value("${custom.jwt.secretKey}")
+    private String secretKey;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -31,7 +34,7 @@ public class SecurityConfig {
                 .sessionManagement((sessionManagement) -> {
                     sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
-                .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(secretKey), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

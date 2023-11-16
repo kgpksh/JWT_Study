@@ -2,10 +2,7 @@ package com.example.jwtStudy.base.member.controller;
 
 import com.example.jwtStudy.base.member.dto.JoinForm;
 import com.example.jwtStudy.base.member.dto.LoginForm;
-import com.example.jwtStudy.base.member.entity.Member;
-import com.example.jwtStudy.base.member.service.JwtService;
 import com.example.jwtStudy.base.member.service.MemberService;
-import com.example.jwtStudy.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
-    private final JwtService jwtService;
 
     @GetMapping("/join")
     public String join() {
@@ -42,11 +38,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> sendLogin(LoginForm loginForm) throws IllegalAccessException {
-        try {
-            return ResponseEntity.ok().body(jwtService.createJwt(loginForm));
-        } catch (Exception e) {
-            return ResponseEntity.ok().body("잘못된 아이디 혹은 비밀번호 입니다.");
-        }
+    public ResponseEntity<String> sendLogin(LoginForm loginForm) {
+        return ResponseEntity.ok().body(memberService.login(loginForm));
     }
 }
